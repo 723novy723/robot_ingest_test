@@ -35,12 +35,12 @@ Verify primary keys are unique
 Verify sample data (ANSI)
     ${cnt}  Get row count  ${TABLE}  source
     ${samples_s}  Get random sample from table  ${TABLE}  ${50}  ${cnt}
-    Log many  Only this samples from source will be compared against source  ${samples_s}  Row count is ${cnt}
+    Log many  Only this samples from source will be compared against source  ${samples_s}  Whereas row count is ${cnt}
     ${cols_source}  Get table column names  ${TABLE}  source
     ${cols_target}  Get table column names  ${TABLE_ANSI}  target
     ${samples_t}  Get samples from target for comparison  ${samples_s}  ${cols_source}  ${cols_target}
     ${igored_s_index}  ${igored_t_index}  Get ignored column index source and target  ${cols_source}  ${cols_target}
-    Perform data comparison check of tables  ${samples_s}  ${samples_t}  ${igored_s_index}
+    Perform data comparison check of tables  ${samples_s}  ${samples_t}  ${igored_s_index}  ${igored_t_index}
 
 
 

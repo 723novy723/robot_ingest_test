@@ -1,4 +1,5 @@
 import sqlite3
+from datetime import datetime
 from sqlite3 import Error
 
 
@@ -53,8 +54,8 @@ def create_company_ansi(conn, company):
     :param company:
     :return: company id
     """
-    sql = ''' INSERT INTO COMPANY_ANSI(NAME,AGE,ADDRESS,SALARY)
-              VALUES(?,?,?,?) '''
+    sql = ''' INSERT INTO COMPANY_ANSI(NAME,AGE,ADDRESS,SALARY,DOI)
+              VALUES(?,?,?,?,?) '''
     cur = conn.cursor()
     cur.execute(sql, company)
     conn.commit()
@@ -93,7 +94,8 @@ def main():
          (NAME           TEXT    NOT NULL,
          AGE            INT     NOT NULL,
          ADDRESS        CHAR(50),
-         SALARY         REAL);"""
+         SALARY         REAL,
+         DOI            DATETIME NOT NULL);"""
 
     # create a database connection
     conn = create_connection(database)
@@ -124,15 +126,15 @@ def main():
         create_company(conn, (1, 'Paul', 32, 'California', 20000.00))
 
         # insert to company_ansi
-        create_company_ansi(conn, ('Olive', 62, 'Toronto', 95000.00))
-        create_company_ansi(conn, ('Becky', 50, 'Detroit', 55000.00))
-        create_company_ansi(conn, ('Vince', 45, 'Cleveland', 95000.00))
-        create_company_ansi(conn, ('Brighton', 15, 'Washington', 55000.00))
-        create_company_ansi(conn, ('Benny', 18, 'Pennsylvania', 45000.00))
-        create_company_ansi(conn, ('Mark', 25, 'Rich-Mond', 65000.00))
-        create_company_ansi(conn, ('Teddy', 23, 'Norway', 20000.00))
-        create_company_ansi(conn, ('Allen', 25, 'Texas', 15000.00))
-        create_company_ansi(conn, ('Paul', 32, 'California', 20000.00))
+        create_company_ansi(conn, ('Olive', 62, 'Toronto', 95000.00, datetime.now()))
+        create_company_ansi(conn, ('Becky', 50, 'Detroit', 55000.00, datetime.now()))
+        create_company_ansi(conn, ('Vince', 45, 'Cleveland', 95000.00, datetime.now()))
+        create_company_ansi(conn, ('Brighton', 15, 'Washington', 55000.00, datetime.now()))
+        create_company_ansi(conn, ('Benny', 18, 'Pennsylvania', 45000.00, datetime.now()))
+        create_company_ansi(conn, ('Mark', 25, 'Rich-Mond', 65000.00, datetime.now()))
+        create_company_ansi(conn, ('Teddy', 23, 'Norway', 20000.00, datetime.now()))
+        create_company_ansi(conn, ('Allen', 25, 'Texas', 15000.00, datetime.now()))
+        create_company_ansi(conn, ('Paul', 32, 'California', 20000.00, datetime.now()))
 
     else:
         print("Error! cannot create the database connection.")

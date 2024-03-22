@@ -56,12 +56,12 @@ Compare Rows
     IF  '${ignore_index_s}'!='${EMPTY}'
         ${row1}  Evaluate  tuple([x for i, x in enumerate(${row1}) if i not in ${ignore_index_s}])
         ${row1_columns}  Get Length  ${row1}
-    ELSE IF  '${ignore_index_t}'!='${EMPTY}'
+    END
+    IF  '${ignore_index_t}'!='${EMPTY}'
          ${row2}  Evaluate  tuple([x for i, x in enumerate(${row2}) if i not in ${ignore_index_t}])
          ${row2_columns}  Get Length  ${row2}
-    ELSE
-        Should Be Equal As Integers  ${row1_columns}  ${row2_columns}
     END
+    Should Be Equal As Integers  ${row1_columns}  ${row2_columns}
     Log Many  ${row1}  ${row2}
     FOR  ${i}  IN RANGE  ${row1_columns}
         ${cell1}  Get From List  ${row1}  ${i}
@@ -84,12 +84,11 @@ Perform check that address California is contained in response
 Get samples from target for comparison
     [Arguments]  ${samples_s}  ${cols_source}  ${cols_target}
     ${common_cols}  Evaluate  [value for value in ${cols_source} if value in ${cols_target}]
-    @{cols}  Evaluate  ${cols_source} if len(${cols_source}) > len(${cols_target}) else ${cols_target}
-    ${indexes}  Evaluate  [${cols}.index(item) for item in ${common_cols}]
+    ${indexes}  Evaluate  [${cols_source}.index(item) for item in ${common_cols}]
     ${cols_str}  Evaluate  ", ".join(${common_cols})
     @{samples}  Create List
     FOR  ${line}  IN  @{samples_s}
-        ${w_cond}  Evaluate  " AND ".join([${cols}\[i] + '=' + '"' + str(${line}\[i]) + '"' for i in ${indexes}])
+        ${w_cond}  Evaluate  " AND ".join([${cols_source}\[i] + '=' + '"' + str(${line}\[i]) + '"' for i in ${indexes}])
         ${select}  Set Variable  SELECT ${cols_str} FROM ${TABLE} WHERE ${w_cond}
         ${query_result}  Query  ${select}  alias=target
         Append To List  ${samples}  ${query_result[0]}
