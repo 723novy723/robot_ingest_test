@@ -45,6 +45,7 @@ def create_company(conn, company):
     conn.commit()
     return cur.lastrowid
 
+
 def main():
     database = "pythonsqlite_source"
 
@@ -85,7 +86,7 @@ def main():
         create_table(conn, sql_create_tasks_table)
 
         # create company table
-        create_table(conn,sql_create_company_table)
+        create_table(conn, sql_create_company_table)
 
         # insert to company
         create_company(conn, (1, 'Paul', 32, 'California', 20000.00))
@@ -99,9 +100,6 @@ def main():
         create_company(conn, (9, 'Olive', 62, 'Toronto', 95000.00))
     else:
         print("Error! cannot create the database connection.")
-
-
-
 
 
 if __name__ == '__main__':
