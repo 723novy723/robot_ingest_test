@@ -89,7 +89,7 @@ Get samples from target for comparison
     @{samples}  Create List
     FOR  ${line}  IN  @{samples_s}
         ${w_cond}  Evaluate  " AND ".join([${cols_source}\[i] + '=' + '"' + str(${line}\[i]) + '"' for i in ${indexes}])
-        ${select}  Set Variable  SELECT ${cols_str} FROM ${TABLE} WHERE ${w_cond}
+        ${select}  Set Variable  SELECT * FROM ${TABLE_ANSI} WHERE ${w_cond}
         ${query_result}  Query  ${select}  alias=target
         Append To List  ${samples}  ${query_result[0]}
     END
